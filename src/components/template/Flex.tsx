@@ -1,10 +1,10 @@
 import mergeClasses from "@/utils/mergeClasses";
 
 interface FlexProps{
-    children: React.ReactNode,
-    className?: string,
-    col?: boolean,
-    row?: boolean,
+    children: React.ReactNode;
+    className?: string;
+    col?: boolean;
+    row?: boolean;
 }
 export default function Flex({ children, className, col, row }:FlexProps) {
     return (
