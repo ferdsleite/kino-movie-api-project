@@ -5,6 +5,7 @@ import useMovieAPI from "@/hooks/useMovieAPI";
 import Wrap from "@/components/template/Wrap";
 import Carrossel from "@/components/template/Carrossel";
 import CardHighlightedMovie from "@/components/movies/CardHighlightedMovie";
+import MoviesList from "@/components/movies/MoviesList";
 
 export default function Movies() {
     const [movies, setMovies] = useState<Movie[]>([]);
@@ -21,6 +22,7 @@ export default function Movies() {
                     return <CardHighlightedMovie movie={movie} key={movie.id} />
                 })}
             </Carrossel>
+            <MoviesList movies={movies} title="Last Movies" />
         </Wrap>
     )
 

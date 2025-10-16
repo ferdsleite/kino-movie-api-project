@@ -5,10 +5,11 @@ interface WrapProps{
     className?: string,
 }
 
-export default function Wrap({ children, className }:WrapProps) {
+export default function Wrap({ children, className }: WrapProps) {
     return (
-        <div className={mergeClasses(
-            "w-full overflow-hidden", className
+        <div className={ mergeClasses(
+            "w-full overflow-hidden", 
+            className
         )}>
             {children}
         </div>

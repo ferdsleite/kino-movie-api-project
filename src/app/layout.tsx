@@ -7,7 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Kino Project",
-  description: "Movie Web App - an educational project created with Next.js, TailwindCss and TypeScript using a public API",
+  description: "Movie Web App - an educational project created in Next.js, TailwindCSS and TypeScript using a API endpoint",
 };
 
 export default function RootLayout({

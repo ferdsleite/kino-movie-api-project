@@ -24,7 +24,7 @@ export default function CardHighlightedMovie({
                     <Link 
                         href={`/movies/${movie.id}`}
                         className={`
-                            px-3 py-3 bg-red-kino font-semibold
+                            px-3 py-3 bg-red-kino font-semibold mt-2
                             rounded-lg hover:brightness-75
                         `}
                     >

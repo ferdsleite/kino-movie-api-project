@@ -53,7 +53,18 @@ export default function useMovieAPI() {
        });
     }
 
+    async function getMovieGenres(movieId: string) {
+        const {json} = await get(`/movie/${movieId}`);
+        return json.genres.map((genre: any) => {
+            return {
+                id: genre.id,
+                name: genre.name
+            }
+        })
+    }
+
     return {
-        getLastMovies
+        getLastMovies,
+        getMovieGenres
     }
 }

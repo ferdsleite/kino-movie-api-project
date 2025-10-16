@@ -7,3 +7,8 @@ interface Movie {
     vote: number;
     launchDate: Date;
 }
+
+type Genre = {
+    id: string;
+    name: string;
+}

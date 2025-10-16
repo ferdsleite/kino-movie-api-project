@@ -8,7 +8,7 @@ interface DescriptionProps {
 export default function Description({ text, className}: DescriptionProps) {
     return (
         <p className={mergeClasses(
-            `mt-2 text-zinc-400 tracking-wide leading-tight text-sm text-justify`,
+            `mt-2 text-zinc-400 tracking-wide leading-tight text-xs md:text-lg lg:text-lg text-justify`,
             className
         )}>
             {text}
