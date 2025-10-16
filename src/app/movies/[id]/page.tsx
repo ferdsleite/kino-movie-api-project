@@ -1,6 +1,7 @@
 'use client';
 
 import CardMovieDetails from "@/components/movies/CardMovieDetails";
+import Cast from "@/components/movies/Cast";
 import Wrap from "@/components/template/Wrap";
 import useMovieAPI from "@/hooks/useMovieAPI";
 import { useParams } from "next/navigation";
@@ -18,6 +19,7 @@ export default function Movie() {
     return (
         <Wrap>
             {movieDetails && <CardMovieDetails movie={movieDetails} />}
+            {movieDetails?.actors && <Cast cast={movieDetails.actors} />}
         </Wrap>
     );
 }

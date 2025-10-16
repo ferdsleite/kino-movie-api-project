@@ -7,7 +7,7 @@ import { Popcorn } from "lucide-react";
 
 export default function Header() {
     return (
-        <Wrap className="bg-neutral-950">
+        <Wrap className="bg-neutral-900">
             <header className="p-4 px-10 md:px-32">
                 <Flex className="justify-between">
                     <Link 
