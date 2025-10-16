@@ -2,6 +2,7 @@
 
 import CardMovieDetails from "@/components/movies/CardMovieDetails";
 import Cast from "@/components/movies/Cast";
+import MovieSuggestions from "@/components/movies/MovieSuggestions";
 import Wrap from "@/components/template/Wrap";
 import useMovieAPI from "@/hooks/useMovieAPI";
 import { useParams } from "next/navigation";
@@ -20,6 +21,7 @@ export default function Movie() {
         <Wrap>
             {movieDetails && <CardMovieDetails movie={movieDetails} />}
             {movieDetails?.actors && <Cast cast={movieDetails.actors} />}
+            <MovieSuggestions idMovie={String(id)} />
         </Wrap>
     );
 }

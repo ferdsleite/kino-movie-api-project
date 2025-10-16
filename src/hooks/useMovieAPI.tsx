@@ -1,3 +1,6 @@
+import { select } from "framer-motion/client";
+import { title } from "process";
+
 const URL_BASE = process.env.NEXT_PUBLIC_URL_BASE;
 const BG_FILME_URL = process.env.NEXT_PUBLIC_BG_FILME_URL;
 const TOKEN_DE_LEITURA = process.env.NEXT_PUBLIC_TOKEN_DE_LEITURA;
@@ -92,9 +95,27 @@ export default function useMovieAPI() {
             };
     }
 
+    async function getSimilarMovies(idMovie: string): Promise<Movie[]> {
+        const { json } = await get(`/movie/${idMovie}/similar`);
+        const selected = json.results.slice(0, 9);
+        return selected.map((item: any) => {
+            return {
+                id: item.id,
+                title: item.title,
+                overview: item.overview,
+                releaseDate: new Date(item.release_date),
+                vote: item.vote_average,
+                linkBgImage: imageURLFormat(item.backdrop_path),
+                linkPosterImage: imageURLFormat(item.poster_path)
+            }
+
+        })
+    }
+
     return {
         getLastMovies,
         getMovieGenres,
-        getMovieDetails
+        getMovieDetails,
+        getSimilarMovies
     }
 }
