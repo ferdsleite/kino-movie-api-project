@@ -10,7 +10,7 @@ export default function Flex({ children, className, col, row }:FlexProps) {
     return (
         <div className={mergeClasses(
             "flex justify-center items-center gap-2",
-            {'flex-col': col, 'flex-row': row},
+            {"flex-col": col, "flex-row": row},
             className
         )}>
             {children}
