@@ -10,7 +10,7 @@ interface MoviePosterProps {
 export default function MoviePoster({ url, title }:MoviePosterProps) {
     return (       
         <Wrap className={`
-                h-72 w-48 md:h-96 md:w-80 lg:h-[700px] lg:w-[500px]
+                h-72 w-48 md:h-96 md:w-80 lg:h-[700px] lg:min-w-[500px]
                 relative overflow-hidden rounded-lg m-auto
             `}>
                 <ImageWithFallback url={url} imgAlt={`Movie Poster ${title}`}>

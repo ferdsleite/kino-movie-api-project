@@ -6,12 +6,17 @@ import mergeClasses from "@/utils/mergeClasses";
 interface MovieGenresProps {
     idMovie: string;
     big?: boolean;
+    genresDefault?: Genre[];
 }
 
-export default function MovieGenres({ idMovie, big }: MovieGenresProps) {
+export default function MovieGenres({ idMovie, big, genresDefault }: MovieGenresProps) {
     const [genres, setGenres] = useState<Genre[]>([]);
     const {getMovieGenres} = useMovieAPI();
     useEffect(() => {
+        if(genresDefault && genresDefault.length > 0) {
+            setGenres(genresDefault)
+            return;
+        }
         getMovieGenres(idMovie).then(setGenres)
     }, []);
 

@@ -5,10 +5,24 @@ interface Movie {
     linkBgImage: string;
     linkPosterImage: string;
     vote: number;
-    launchDate: Date;
+    releaseDate: Date;
+}
+
+interface MovieDetails extends Movie {
+    originalTitle: string;
+    genres: Genre[];
+    actors: Actor[];
+    duration: number;
 }
 
 type Genre = {
     id: string;
     name: string;
+}
+
+type Actor = {
+    id: string;
+    name: string;
+    profileImage: string;
+    character: string;
 }

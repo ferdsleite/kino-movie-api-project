@@ -63,8 +63,38 @@ export default function useMovieAPI() {
         })
     }
 
+   async function getMovieDetails(movieId: string):Promise<MovieDetails> {        
+       const { json } = await get(
+            `/movie/${movieId}`, 
+            "append_to_response=credits"
+        );
+            return {
+                id: json.id,
+                title: json.title,
+                overview: json.overview,
+                releaseDate: new Date(json.release_date),
+                vote: json.vote_average,
+                linkBgImage: imageURLFormat(json.backdrop_path),
+                linkPosterImage: imageURLFormat(json.poster_path),
+                originalTitle: json.original_title,
+                genres: json.genres.map((g: any) => {
+                    return {id: g.id, name: g.name} 
+                }),
+                actors: json.credits.cast.slice(0,10).map((actor: any) => {
+                    return {
+                        id: actor.id,
+                        name: actor.name,
+                        profileImage: imageURLFormat(actor.profile_path),
+                        character: actor.character,
+                    }
+                }),
+                duration: json.runtime
+            };
+    }
+
     return {
         getLastMovies,
-        getMovieGenres
+        getMovieGenres,
+        getMovieDetails
     }
 }
