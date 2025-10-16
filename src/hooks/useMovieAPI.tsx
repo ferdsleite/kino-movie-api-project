@@ -45,7 +45,7 @@ export default function useMovieAPI() {
                 id: item.id,
                 title: item.title,
                 overview: item.overview,
-                launchDate: new Date(item.release_date),
+                releaseDate: new Date(item.release_date),
                 vote: item.vote_average,
                 linkBgImage: imageURLFormat(item.backdrop_path),
                 linkPosterImage: imageURLFormat(item.poster_path)
