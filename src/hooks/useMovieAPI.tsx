@@ -112,10 +112,48 @@ export default function useMovieAPI() {
         })
     }
 
+    async function getActorDetails(idActor: string): Promise<ActorDetails> {
+        const { json } = await get(`/person/${idActor}?language=en-US`);
+        return {
+            id: json.id,
+            name: json.name,
+            bio: json.biography,
+            profileImage: imageURLFormat(json.profile_path),
+            birthDate: new Date(json.birthday),
+            birthPlace: json.place_of_birth,
+            genre: 
+                json.gender === 1 ? "Woman" : json.gender === 2 ?  "Man" : "Unknow",
+        };
+    }
+
+    async function getActorImages(idActor: string) {
+        const { json } = await get(`/person/${idActor}/images`);
+        return json.profiles.map((img: any) => imageURLFormat(img.file_path))
+    }
+
+    async function getAnotherMovies(idActor: string): Promise<Movie[]> {
+        const { json } = await get(`/person/${idActor}/movie_credits`);
+        const actorMovies = json.cast.slice(0, 9);
+        return actorMovies.map((item: any) => {
+            return {
+                id: item.id,
+                title: item.title,
+                overview: item.overview,
+                releaseDate: new Date(item.release_date),
+                vote: item.vote_average,
+                linkBgImage: imageURLFormat(item.backdrop_path),
+                linkPosterImage: imageURLFormat(item.poster_path)
+            }
+        })
+    }
+
     return {
         getLastMovies,
         getMovieGenres,
         getMovieDetails,
-        getSimilarMovies
+        getSimilarMovies,
+        getActorDetails,
+        getActorImages,
+        getAnotherMovies,
     }
 }

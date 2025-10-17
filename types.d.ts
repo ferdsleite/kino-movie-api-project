@@ -26,3 +26,13 @@ type Actor = {
     profileImage: string;
     character: string;
 }
+
+type ActorDetails = {
+    id: string;
+    name: string;
+    profileImage: string;
+    bio: string;
+    birthDate: Date;
+    genre: string;
+    birthPlace: string
+}

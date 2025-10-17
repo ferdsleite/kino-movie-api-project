@@ -1,21 +1,21 @@
 import useMovieAPI from "@/hooks/useMovieAPI";
 import Container from "../template/Container";
-import MoviesList from "./MoviesList";
+import MoviesList from "../movies/MoviesList";
 import { useEffect, useState } from "react";
 
-interface MovieSuggestionsProps {
-    idMovie: string;
+interface AnotherMoviesProps {
+    idActor: string;
 }
 
-export default function MovieSuggestions({ idMovie }: MovieSuggestionsProps) {
+export default function AnotherMovies({ idActor }: AnotherMoviesProps) {
     const [movies, setMovies] = useState<Movie[]>([]);
-    const {getSimilarMovies} = useMovieAPI();
+    const { getAnotherMovies } = useMovieAPI();
     useEffect(() => {
-        getSimilarMovies(idMovie).then(setMovies)
+        getAnotherMovies(idActor).then(setMovies)
     }, [])
     return (
         <Container className="my-16 bg-neutral-950 rounded-lg lg:pt-10" >
-            <MoviesList movies={movies} title="Recommended Movies"/>
+            <MoviesList movies={movies} title="Filmography"/>
         </Container>
     )
 }

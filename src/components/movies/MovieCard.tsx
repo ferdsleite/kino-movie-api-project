@@ -25,7 +25,7 @@ export default function MovieCard({ movie, className }: MovieCardProps) {
                 imgAlt={`Movie background image: ${movie.title}`}
                 className="opacity-40 group-hover:opacity-15 transition-all"
             >
-                <Film size={100} className="w-1/2" />
+                <Film size={50} className="w-1/2 h-2/3 transition-all text-slate-800" />
             </ImageWithFallback>
             <Flex col className="h-60 z-50 justify-between py-8 px-4">
                 <Title text={movie.title} smallText align="left" />
