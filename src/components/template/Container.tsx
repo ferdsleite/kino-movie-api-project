@@ -1,3 +1,5 @@
+'use client';
+
 import mergeClasses from "@/utils/mergeClasses";
 
 interface ContainerProps {

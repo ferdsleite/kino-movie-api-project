@@ -1,36 +1,75 @@
-import { select } from "framer-motion/client";
-import { title } from "process";
-
 const URL_BASE = process.env.NEXT_PUBLIC_URL_BASE;
 const BG_FILME_URL = process.env.NEXT_PUBLIC_BG_FILME_URL;
 const TOKEN_DE_LEITURA = process.env.NEXT_PUBLIC_TOKEN_DE_LEITURA;
 
-console.log("URL_BASE:", process.env.NEXT_PUBLIC_URL_BASE);
-
-export default function useMovieAPI() {
     async function get(urlFragment: string, params?: string) {
+        if (!URL_BASE || !TOKEN_DE_LEITURA) {
+        throw new Error("Missing required environment variables");
+    }    
         const fragment = urlFragment.startsWith("/") 
             ? urlFragment.substring(1) 
             : urlFragment;
-        try {
-            const response = await fetch(
-                `${URL_BASE}/${fragment}?language=en-US&page=1${
+        
+        const url = `${URL_BASE}/${fragment}?language=en-US&page=1${
 					params ? `&${params}` : ""
-				}`,
-				{
-					method: "GET",
-					headers: {
-						accept: "application/json",
-						Authorization: `Bearer ${TOKEN_DE_LEITURA}`,
-					},
-                });
-                const json = await response.json();
-                return {
-                    json, 
+				}`;
+    try {
+            console.log('Fetching:', { url, fragment });  // Debug log
+            
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    accept: "application/json",
+                    Authorization: `Bearer ${TOKEN_DE_LEITURA}`,
+                },
+                next: {revalidate: 3600},
+            });
+
+            if (!response.ok) {
+                const text = await response.text();
+                const errorDetails = {
+                    url,
+                    method: 'GET',
                     status: response.status,
-                }
+                    statusText: response.statusText,
+                    headers: Object.fromEntries(response.headers.entries()),
+                    responseText: text.substring(0, 200),
+                    fragment,
+                    params
+                };
+                
+                console.error('API Error Response:', JSON.stringify(errorDetails, null, 2));
+                throw new Error(`API request failed: ${response.status} ${response.statusText}\nURL: ${url}`);
+            }
+
+            const contentType = response.headers.get("content-type");
+            if (!contentType?.includes("application/json")) {
+                console.error('Invalid Content-Type:', {
+                    expected: 'application/json',
+                    received: contentType,
+                    url
+                });
+                throw new Error(`Expected JSON response but got ${contentType}`);
+            }            
+            
+            const json = await response.json();
+            return {
+                json, 
+                status: response.status,
+            };
         } catch (error) {
-            console.log(error);
+            const errorDetails = {
+                url,
+                fragment,
+                params,
+                error: error instanceof Error ? {
+                    name: error.name,
+                    message: error.message,
+                    stack: error.stack
+                } : 'Unknown error'
+            };
+            
+            console.error('API Request Error:', JSON.stringify(errorDetails, null, 2));
             throw error;
         }
     }
@@ -40,7 +79,7 @@ export default function useMovieAPI() {
         return `${BG_FILME_URL}${url}`; 
     }
 
-    async function getLastMovies():Promise<Movie[]> {        
+    export async function getLastMovies(): Promise<Movie[]> {        
        const { json, status } = await get("movie/now_playing");
        const someMovies = json.results.slice(0, 12);
        return someMovies.map((item: any) => {
@@ -56,7 +95,7 @@ export default function useMovieAPI() {
        });
     }
 
-    async function getMovieGenres(movieId: string) {
+    export async function getMovieGenres(movieId: string) {
         const {json} = await get(`/movie/${movieId}`);
         return json.genres.map((genre: any) => {
             return {
@@ -66,7 +105,7 @@ export default function useMovieAPI() {
         })
     }
 
-   async function getMovieDetails(movieId: string):Promise<MovieDetails> {        
+   export async function getMovieDetails(movieId: string):Promise<MovieDetails> {        
        const { json } = await get(
             `/movie/${movieId}`, 
             "append_to_response=credits"
@@ -95,7 +134,7 @@ export default function useMovieAPI() {
             };
     }
 
-    async function getSimilarMovies(idMovie: string): Promise<Movie[]> {
+    export async function getSimilarMovies(idMovie: string): Promise<Movie[]> {
         const { json } = await get(`/movie/${idMovie}/similar`);
         const selected = json.results.slice(0, 9);
         return selected.map((item: any) => {
@@ -112,7 +151,7 @@ export default function useMovieAPI() {
         })
     }
 
-    async function getActorDetails(idActor: string): Promise<ActorDetails> {
+    export async function getActorDetails(idActor: string): Promise<ActorDetails> {
         const { json } = await get(`/person/${idActor}?language=en-US`);
         return {
             id: json.id,
@@ -126,12 +165,12 @@ export default function useMovieAPI() {
         };
     }
 
-    async function getActorImages(idActor: string) {
+    export async function getActorImages(idActor: string) {
         const { json } = await get(`/person/${idActor}/images`);
         return json.profiles.map((img: any) => imageURLFormat(img.file_path))
     }
 
-    async function getAnotherMovies(idActor: string): Promise<Movie[]> {
+    export async function getAnotherMovies(idActor: string): Promise<Movie[]> {
         const { json } = await get(`/person/${idActor}/movie_credits`);
         const actorMovies = json.cast.slice(0, 9);
         return actorMovies.map((item: any) => {
@@ -146,14 +185,3 @@ export default function useMovieAPI() {
             }
         })
     }
-
-    return {
-        getLastMovies,
-        getMovieGenres,
-        getMovieDetails,
-        getSimilarMovies,
-        getActorDetails,
-        getActorImages,
-        getAnotherMovies,
-    }
-}

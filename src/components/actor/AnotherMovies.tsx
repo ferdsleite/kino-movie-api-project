@@ -1,21 +1,23 @@
-import useMovieAPI from "@/hooks/useMovieAPI";
+import { getAnotherMovies } from "@/lib/MovieAPI";
 import Container from "../template/Container";
 import MoviesList from "../movies/MoviesList";
-import { useEffect, useState } from "react";
 
 interface AnotherMoviesProps {
     idActor: string;
 }
 
-export default function AnotherMovies({ idActor }: AnotherMoviesProps) {
-    const [movies, setMovies] = useState<Movie[]>([]);
-    const { getAnotherMovies } = useMovieAPI();
-    useEffect(() => {
-        getAnotherMovies(idActor).then(setMovies)
-    }, [])
-    return (
-        <Container className="my-16 bg-neutral-950 rounded-lg lg:pt-10" >
-            <MoviesList movies={movies} title="Filmography"/>
-        </Container>
-    )
+export default async function AnotherMovies({ idActor }: AnotherMoviesProps) {  
+    try {
+        const movies = await getAnotherMovies(idActor);
+        const limitedMovies = movies.slice(0, 9);
+    
+        return (
+            <Container className="my-16 bg-neutral-950 rounded-lg lg:pt-10" >
+                <MoviesList movies={limitedMovies} title="Filmography"/>
+            </Container>
+        );
+    } catch (error) {
+        console.error('Error loading movies', error);
+        return <div>Failed to load Filmography</div>;
+    }
 }

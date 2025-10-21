@@ -16,9 +16,9 @@ export default function CardMovieDetails({ movie }: CardMovieDetailsProps) {
             <Flex col className={`bg-neutral-950 rounded-lg mt-8
             p-4 md:p-8 lg:flex-row`}>
                     <MoviePoster url={movie.linkPosterImage}  title={movie.title}/>
-                    <Flex col className="m-3 ml-8 gap-8 text-xl items-start">
-                        <Title text={movie.title} align="center" className="lg:text-start my-0 lg:my-5" />
-                        <Description text={movie.overview} className="text-base mt-0"/>
+                    <Flex col className="m-6 lg:m-3 ml-0 lg:ml-8 gap-4 lg:gap-6 text-xl items-start">
+                        <Title text={movie.title} align="left" className="lg:text-start my-0 lg:my-5" />
+                        <Description text={movie.overview} className="text-base mt-0 lg:mt-2"/>
                         <p className="text-sm text-zinc-500">Release Date: {new Intl.DateTimeFormat("en-US").format(
                             new Date(`${movie.releaseDate}`)
                         )}</p>

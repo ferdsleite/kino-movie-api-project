@@ -18,9 +18,9 @@ export default function CardHighlightedMovie({
     return (
         <Container className={className}>
             <Flex className="gap-8 flex-col-reverse lg:flex-row">
-                <Flex col className="flex-1 items-start">
+                <Flex col className="flex-1 items-start px-4">
                     <Title align="left" text={movie.title} />
-                    <Description text={movie.overview} className="text-xl text-justify"/>
+                    <Description text={movie.overview} className="text-base text-justify"/>
                     <Link 
                         href={`/movies/${movie.id}`}
                         className={`

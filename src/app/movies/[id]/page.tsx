@@ -1,26 +1,21 @@
-'use client';
-
 import CardMovieDetails from "@/components/movies/CardMovieDetails";
 import Cast from "@/components/movies/Cast";
 import MovieSuggestions from "@/components/movies/MovieSuggestions";
 import Wrap from "@/components/template/Wrap";
-import useMovieAPI from "@/hooks/useMovieAPI";
-import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { getMovieDetails } from "@/lib/MovieAPI";
 
-export default function Movie() {
-    const { id } = useParams();
-    const [movieDetails, setMovieDetails] = useState<MovieDetails | null>(null);
-    const {getMovieDetails} = useMovieAPI();
+interface MovieProps {
+    params: {id: string}
+}
 
-    useEffect(() => {
-        getMovieDetails(String(id)).then(setMovieDetails)
-    }, []);
+export default async function Movie({params}: MovieProps) {
+    const { id } =  await params;
+    const movieDetails:MovieDetails =  await getMovieDetails(String(id));
 
     return (
         <Wrap>
-            {movieDetails && <CardMovieDetails movie={movieDetails} />}
-            {movieDetails?.actors && <Cast cast={movieDetails.actors} />}
+            <CardMovieDetails movie={movieDetails} />
+            <Cast cast={movieDetails.actors} />
             <MovieSuggestions idMovie={String(id)} />
         </Wrap>
     );

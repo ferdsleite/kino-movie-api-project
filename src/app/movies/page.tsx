@@ -1,23 +1,15 @@
-'use client';
-
-import { useEffect, useState } from "react";
-import useMovieAPI from "@/hooks/useMovieAPI";
+import { getLastMovies } from "@/lib/MovieAPI";
 import Wrap from "@/components/template/Wrap";
 import Carrossel from "@/components/template/Carrossel";
 import CardHighlightedMovie from "@/components/movies/CardHighlightedMovie";
 import MoviesList from "@/components/movies/MoviesList";
 
-export default function Movies() {
-    const [movies, setMovies] = useState<Movie[]>([]);
-    const {getLastMovies} = useMovieAPI();
-    
-    useEffect(() => {
-        getLastMovies().then(setMovies)
-    },[])
+export default  async function Movies() {
+    const movies: Movie[] = await getLastMovies();
 
     return (
         <Wrap>
-            <Carrossel slideAutomatic>
+            <Carrossel slideAutomatic={true}>
                 {movies.map((movie) => {
                     return <CardHighlightedMovie movie={movie} key={movie.id} />
                 })}

@@ -1,5 +1,4 @@
 import mergeClasses from "@/utils/mergeClasses";
-import { button } from "framer-motion/client";
 
 interface ButtomProps {
     text: string;
@@ -15,7 +14,7 @@ export default function Buttom({ text, icon, className}: ButtomProps) {
                 px-3 py-2 font-semibold rounded-lg
                 hover:brightness-75 hover:transition-all
                 bg-red-kino
-                `)}
+                `, className)}
         >
             {text}
             {icon}

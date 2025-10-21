@@ -1,7 +1,9 @@
+'use client';
+
 import { useEffect, useState } from "react";
 import Flex from "../template/Flex";
-import useMovieAPI from "@/hooks/useMovieAPI";
 import mergeClasses from "@/utils/mergeClasses";
+import Skeleton from "../template/Skeleton";
 
 interface MovieGenresProps {
     idMovie: string;
@@ -10,15 +12,38 @@ interface MovieGenresProps {
 }
 
 export default function MovieGenres({ idMovie, big, genresDefault }: MovieGenresProps) {
-    const [genres, setGenres] = useState<Genre[]>([]);
-    const {getMovieGenres} = useMovieAPI();
+    const [genres, setGenres] = useState<Genre[] | null>(null);
+ 
     useEffect(() => {
         if(genresDefault && genresDefault.length > 0) {
             setGenres(genresDefault)
             return;
         }
-        getMovieGenres(idMovie).then(setGenres)
-    }, []);
+
+        async function fetchGenres() {
+            try {
+                const res = await fetch(`/api/genres/${idMovie}`);
+                if(!res.ok) throw new Error("Failed to fecth genres");
+                const data = await res.json();
+                setGenres(data);
+            }  catch (error) {
+                console.error(error);
+            }
+        }
+        fetchGenres();
+    }, [idMovie]);
+
+    if(!genres) {
+        return (
+            <Flex className="flex-wrap justify-start">
+                {Array(4)
+                    .fill(0)
+                    .map((_, i) => {
+                        return <Skeleton key={i} className="rounded-lg h-8 w-16" />
+                })}
+            </Flex>            
+        )
+    }
 
     return (
         <Flex className="flex-wrap justify-start">
@@ -35,5 +60,5 @@ export default function MovieGenres({ idMovie, big, genresDefault }: MovieGenres
                 )
             })}
         </Flex>
-    )
+    );
 }

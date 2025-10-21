@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Container from "../template/Container";
 import Grid from "../template/Grid";
@@ -30,7 +32,7 @@ export default function MoviesList({ movies, className, title, smallText }: Movi
                             <AnimatePresence>
                                 {selectedIndice === indice && (
                                 <motion.span
-                                    className="absolute inset-0 h-full w-full bg-red-kino/50 block  rounded-3xl"
+                                    className="absolute inset-0 h-full w-full bg-red-kino/50 block rounded-3xl"
                                     layoutId="hoverBackground"
                                     initial={{ opacity: 0 }}
                                     animate={{

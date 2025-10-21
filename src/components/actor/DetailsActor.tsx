@@ -23,16 +23,16 @@ export default function DetailsActor({ actor }: DetailsActorProps) {
             w-full justify-between items-center
             pt-16 md:pt-20 lg:pt-26`}>
             <Title text={actor.name} align="center" smallText />
-            <Flex className="gap-5 flex-wrap font-medium">
+            <Flex className="gap-5 flex-wrap font-medium text-balance text-center text-sm">
                 {actor.genre && (<span>Genre: {actor.genre}</span>)}
                 {actor.birthDate && (<span>Birthday: {new Intl.DateTimeFormat("en-US").format(actor.birthDate)}</span>)}
                 {actor.birthPlace && (<span>Birth Place: {actor.birthPlace}</span>)}
             </Flex>
-            <Flex col className="p-3 flex-1">
+            <Flex col className="lg:p-3 flex-1">
                 {actor.bio ? (
                     <>
                         <Title text="Biography" align="center" smallText  />
-                        <Description text={actor.bio} className="text-justify mx-10 my-5 text-xs pl-4 pr-4" />
+                        <Description text={actor.bio} className="text-justify mx-4 md:mx-8 lg:mx-10 my-2 text-xs" />
                     </>
                 ) : <WithoutBio/>}
                 
