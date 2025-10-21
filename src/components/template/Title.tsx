@@ -11,10 +11,10 @@ export default function Title({ text, smallText, className, align}:TitleProps) {
     return (
         <h1
             className={mergeClasses(`
-                my-5 text-3xl px-0 font-bold w-full 
+                my-4 text-3xl px-0 font-bold w-full 
                 md:text-4xl xl:text-5xl`,
                 {
-                    "font-semibold text-xl md:text-2xl xl:text-3xl": smallText,
+                    "font-semibold text-lg md:text-2xl xl:text-2xl": smallText,
                     [`text-${align}`]: align
                 }, 
                 className
