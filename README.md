@@ -104,7 +104,7 @@ Once the application is running, you can:
 - [Next.js](https://nextjs.org/docs)
 
 ## 🧑🏻‍💻 Preview
-- 🔗 **Live Demo**: [Kino Project](https://kino-project.vercel.app/)
+- 🔗 **Live Demo**: [Kino Project](https://kino-movie-project.netlify.app)
 - 🔗 **GitHub Repo**: https://github.com/ferdsleite/kino-movie-api-project
 
 ## 👩‍💻 Connect with me

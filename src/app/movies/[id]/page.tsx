@@ -4,12 +4,13 @@ import MovieSuggestions from "@/components/movies/MovieSuggestions";
 import Wrap from "@/components/template/Wrap";
 import { getMovieDetails } from "@/lib/MovieAPI";
 
-interface MovieProps {
+export default async function Movie({
+    params,
+    }: {
     params: { id: string };
-}
+    }) {
 
-export default async function Movie({params}: MovieProps) {
-    const { id } =  params;
+    const { id } =  await params;
     const movieDetails:MovieDetails =  await getMovieDetails(String(id));
 
     return (
