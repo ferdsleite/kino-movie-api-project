@@ -103,7 +103,8 @@ Once the application is running, you can:
 - [The Movie DB](https://developer.themoviedb.org/docs/getting-started)
 - [Next.js](https://nextjs.org/docs)
 
-## 🧑🏻‍💻 Project Link
+## 🧑🏻‍💻 Preview
+- 🔗 **Live Demo**: https://kino-movie-project.netlify.app/movies
 - 🔗 **GitHub Repo**: https://github.com/ferdsleite/kino-movie-api-project
 
 ## 👩‍💻 Connect with me
