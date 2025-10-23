@@ -128,8 +128,8 @@ export default function Carrossel({
 							return (
 								<button
 									key={i}
-									className={mergeClasses("h-3 w-3 rounded-full bg-gray-800", {
-										"bg-gray-500": i === indiceAtual,
+									className={mergeClasses("h-3 w-3 rounded-full bg-zinc-800", {
+										"bg-zinc-500": i === indiceAtual,
 									})}
 									onClick={() => setIndiceAtual(i)}
 								></button>
@@ -144,7 +144,7 @@ export default function Carrossel({
 							animacaoRef.current!.style.display = "none";
 						}}
 						className={`rounded-lg h-full 
-                            animate-[timer_4.8s_ease-in-out] bg-gray-800`}
+                            animate-[timer_4.8s_ease-in-out] bg-zinc-800`}
 					></div>
 				</Wrap>
 			</Container>
