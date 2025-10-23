@@ -5,11 +5,11 @@ import Wrap from "@/components/template/Wrap";
 import { getMovieDetails } from "@/lib/MovieAPI";
 
 interface MovieProps {
-    params: {id: string}
+    params: { id: string };
 }
 
 export default async function Movie({params}: MovieProps) {
-    const { id } =  await params;
+    const { id } =  params;
     const movieDetails:MovieDetails =  await getMovieDetails(String(id));
 
     return (
