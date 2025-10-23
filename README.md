@@ -103,11 +103,13 @@ Once the application is running, you can:
 - [The Movie DB](https://developer.themoviedb.org/docs/getting-started)
 - [Next.js](https://nextjs.org/docs)
 
+## 🧑🏻‍💻 Preview
+- 🔗 **Live Demo**: [Kino Project]()
+- 🔗 **GitHub Repo**: https://github.com/ferdsleite/kino-movie-api-project
+
 ## 👩‍💻 Connect with me
 
 [![Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/fernandaleitedepaula)
-
-Project Link: [https://github.com/ferdsleite/kino-movie-api-project](https://github.com/ferdsleite/kino-movie-api-project)
 
 ---
 <p align="center">Built by Fernanda Leite with 💙 and Next.js, showcasing a transition to modern web development.</p>
