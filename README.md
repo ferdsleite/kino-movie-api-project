@@ -90,7 +90,7 @@ You need **Node.js** installed on your machine.
 Once the application is running, you can:
 
 1.  View the main page to see the **latest movie releases**.
-2.  Click on any movie card to view its **detailed page**, including the technical fiche, cast, and related recommendations.
+2.  Click on any movie card to view its **detailed page**, including the movie details, cast, and related recommendations.
 3.  The application is fully **responsive** and can be tested on different screen sizes to see the Tailwind CSS implementation in action.
 
 ## ⭐ Main dependencies
