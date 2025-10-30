@@ -94,10 +94,10 @@ Once the application is running, you can:
 3.  The application is fully **responsive** and can be tested on different screen sizes to see the Tailwind CSS implementation in action.
 
 ## ⭐ Main dependencies
-- [Lucide React](https://lucide.dev/guide/packages/lucide-react)
-- [CSLX](https://www.npmjs.com/package/clsx )
-- [Framer Motion](https://motion.dev/docs/react)
-- [Tailwind Merge](https://github.com/dcastil/tailwind-merge/blob/v3.3.1/docs/what-is-it-for.md)
+- **clsx** – Utility to conditionally combine class names without conflicts.
+- **tailwind-merge** – Merges and resolves conflicting Tailwind CSS classes.
+- **framer-motion** – Animations and transitions for React components.
+- **lucide-react** – Beautiful, customizable icon set for React projects.
 
 ## 💎 Helpful links
 - [The Movie DB](https://developer.themoviedb.org/docs/getting-started)
