@@ -18,12 +18,11 @@ The application allows users to view and navigate the latest film releases by le
 
 My primary goal with Kino was to move beyond foundational concepts and directly apply industry-standard technologies, focusing on:
 
-* Implementing **Server-Side Rendering (SSR)** and **Client-Side Components** in Next.js for optimized performance and SEO.
-* Enforcing code quality and structure through **TypeScript**.
-* Creating a fully **responsive and modern UI** using the utility-first approach of **Tailwind CSS**.
+- Implementing **Server-Side Rendering (SSR)** and **Client-Side Components** in Next.js for optimized performance and SEO.
+- Enforcing code quality and structure through **TypeScript**.
+- Creating a fully **responsive and modern UI** using the utility-first approach of **Tailwind CSS**.
 
 This project demonstrates my ability to rapidly integrate new, complex technologies and deliver a robust, functional, and visually appealing application.
-
 
 <p align="center">
   <img src="./assets/kino-project-responsive-views.jpg" alt="Kino application displaying movie releases" width="700"/>
@@ -31,21 +30,21 @@ This project demonstrates my ability to rapidly integrate new, complex technolog
 
 ## ✨ Key Features
 
-* **Latest Releases Catalog:** Displays a curated list of the most recent movies.
-* **Detailed Production View:** Provides complete information for each film, including **technical specifications** (year, duration, rating).
-* **Rich Cast Gallery:** Showcases the main actors, their roles, mini-biographies, and principal works.
-* **Intelligent Recommendations:** Suggests related films based on genres and actors' participation.
-* **Modern & Responsive Design:** A sleek interface built with Tailwind CSS that adapts seamlessly to all screen sizes.
+- **Latest Releases Catalog:** Displays a curated list of the most recent movies.
+- **Detailed Production View:** Provides complete information for each film, including **technical specifications** (year, duration, rating).
+- **Rich Cast Gallery:** Showcases the main actors, their roles, mini-biographies, and principal works.
+- **Intelligent Recommendations:** Suggests related films based on genres and actors' participation.
+- **Modern & Responsive Design:** A sleek interface built with Tailwind CSS that adapts seamlessly to all screen sizes.
 
 ## ⚙️ Tech Stack
 
-| Technology | Purpose | 
-| :--- | :--- | 
-| **Next.js** | React Framework for server-side rendering and routing. | 
-| **TypeScript** | Type safety and improved developer experience. | 
-| **Tailwind CSS** | Utility-first CSS framework for rapid and responsive styling. | 
-| **React** | Core component library. | 
-| **TheMovieDB API** | External data source for movie information. | 
+| Technology         | Purpose                                                       |
+| :----------------- | :------------------------------------------------------------ |
+| **Next.js**        | React Framework for server-side rendering and routing.        |
+| **TypeScript**     | Type safety and improved developer experience.                |
+| **Tailwind CSS**   | Utility-first CSS framework for rapid and responsive styling. |
+| **React**          | Core component library.                                       |
+| **TheMovieDB API** | External data source for movie information.                   |
 
 ## 🖥️ Installation
 
@@ -71,13 +70,15 @@ You need **Node.js** installed on your machine.
     ```
 4.  **Configure Environment Variables:**
     Create a file named `.env` in the root of the application. It must contain the necessary API key and environment variables listed in the provided `.env.example` file.
-    
-    *Example `.env` content (variables will vary based on TheMovieDB requirements):*
+
+    _Example `.env` content (variables will vary based on TheMovieDB requirements):_
+
     ```
     NEXT_PUBLIC_API_KEY="YOUR_TMDB_API_KEY"
     NEXT_PUBLIC_API_URL="[https://api.themoviedb.org/3](https://api.themoviedb.org/3)"
     NEXT_PUBLIC_BG_MOVIE_URL="[https://image.tmdb.org](https://image.tmdb.org)"
     ```
+
 5.  **Start the Next.js development server:**
     ```bash
     npm run dev
@@ -94,17 +95,20 @@ Once the application is running, you can:
 3.  The application is fully **responsive** and can be tested on different screen sizes to see the Tailwind CSS implementation in action.
 
 ## ⭐ Main dependencies
+
 - **clsx** – Utility to conditionally combine class names without conflicts.
 - **tailwind-merge** – Merges and resolves conflicting Tailwind CSS classes.
 - **framer-motion** – Animations and transitions for React components.
 - **lucide-react** – Beautiful, customizable icon set for React projects.
 
 ## 💎 Helpful links
+
 - [The Movie DB](https://developer.themoviedb.org/docs/getting-started)
 - [Next.js](https://nextjs.org/docs)
 
 ## 🧑🏻‍💻 Preview
-- 🔗 **Live Demo**: https://kino-movie-project.netlify.app/movies
+
+- 🔗 **Live Demo**: https://kino-movie-api-project.vercel.app/movies
 - 🔗 **GitHub Repo**: https://github.com/ferdsleite/kino-movie-api-project
 
 ## 👩‍💻 Connect with me
@@ -112,4 +116,5 @@ Once the application is running, you can:
 [![Linkedin](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/fernandaleitedepaula)
 
 ---
+
 <p align="center">Built by Fernanda Leite with 💙 and Next.js, showcasing a transition to modern web development.</p>
