@@ -1,5 +1,4 @@
 const URL_BASE = process.env.NEXT_PUBLIC_URL_BASE;
-const BG_FILME_URL = process.env.NEXT_PUBLIC_BG_FILME_URL;
 const TOKEN_DE_LEITURA = process.env.NEXT_PUBLIC_TOKEN_DE_LEITURA;
 
     async function get(urlFragment: string, params?: string) {
@@ -14,15 +13,13 @@ const TOKEN_DE_LEITURA = process.env.NEXT_PUBLIC_TOKEN_DE_LEITURA;
 					params ? `&${params}` : ""
 				}`;
     try {
-            console.log('Fetching:', { url, fragment });  // Debug log
-            
             const response = await fetch(url, {
                 method: "GET",
                 headers: {
                     accept: "application/json",
                     Authorization: `Bearer ${TOKEN_DE_LEITURA}`,
                 },
-                next: {revalidate: 3600},
+                next: { revalidate: 86400 },
             });
 
             if (!response.ok) {
@@ -74,35 +71,38 @@ const TOKEN_DE_LEITURA = process.env.NEXT_PUBLIC_TOKEN_DE_LEITURA;
         }
     }
 
-    function imageURLFormat(url: string) {
+    // TMDB already serves resized images from its own CDN, so we request the
+    // size we need instead of running Vercel Image Optimization on originals.
+    type TmdbSize = "w185" | "w342" | "w500" | "w780" | "w1280" | "h632";
+    function imageURLFormat(url: string, size: TmdbSize = "w500") {
         if(!url) return "";
-        return `${BG_FILME_URL}${url}`; 
+        return `https://image.tmdb.org/t/p/${size}${url}`;
     }
 
-    export async function getLastMovies(): Promise<Movie[]> {        
-       const { json, status } = await get("movie/now_playing");
-       const someMovies = json.results.slice(0, 12);
-       return someMovies.map((item: any) => {
-            return {
-                id: item.id,
-                title: item.title,
-                overview: item.overview,
-                releaseDate: new Date(item.release_date),
-                vote: item.vote_average,
-                linkBgImage: imageURLFormat(item.backdrop_path),
-                linkPosterImage: imageURLFormat(item.poster_path)
-            };
-       });
+    // One cached call for all genre names, instead of one API call per movie card.
+    async function getGenreMap(): Promise<Map<number, string>> {
+        const { json } = await get("genre/movie/list");
+        return new Map(json.genres.map((g: any) => [g.id, g.name]));
     }
 
-    export async function getMovieGenres(movieId: string) {
-        const {json} = await get(`/movie/${movieId}`);
-        return json.genres.map((genre: any) => {
-            return {
-                id: genre.id,
-                name: genre.name
-            }
-        })
+    function mapMovie(item: any, genreMap: Map<number, string>): Movie {
+        return {
+            id: item.id,
+            title: item.title,
+            overview: item.overview,
+            releaseDate: new Date(item.release_date),
+            vote: item.vote_average,
+            linkBgImage: imageURLFormat(item.backdrop_path, "w780"),
+            linkPosterImage: imageURLFormat(item.poster_path, "w500"),
+            genres: (item.genre_ids ?? [])
+                .filter((id: number) => genreMap.has(id))
+                .map((id: number) => ({ id: String(id), name: genreMap.get(id)! })),
+        };
+    }
+
+    export async function getLastMovies(): Promise<Movie[]> {
+        const [{ json }, genreMap] = await Promise.all([get("movie/now_playing"), getGenreMap()]);
+        return json.results.slice(0, 12).map((item: any) => mapMovie(item, genreMap));
     }
 
    export async function getMovieDetails(movieId: string):Promise<MovieDetails> {        
@@ -116,8 +116,8 @@ const TOKEN_DE_LEITURA = process.env.NEXT_PUBLIC_TOKEN_DE_LEITURA;
                 overview: json.overview,
                 releaseDate: new Date(json.release_date),
                 vote: json.vote_average,
-                linkBgImage: imageURLFormat(json.backdrop_path),
-                linkPosterImage: imageURLFormat(json.poster_path),
+                linkBgImage: imageURLFormat(json.backdrop_path, "w1280"),
+                linkPosterImage: imageURLFormat(json.poster_path, "w500"),
                 originalTitle: json.original_title,
                 genres: json.genres.map((g: any) => {
                     return {id: g.id, name: g.name} 
@@ -126,7 +126,7 @@ const TOKEN_DE_LEITURA = process.env.NEXT_PUBLIC_TOKEN_DE_LEITURA;
                     return {
                         id: actor.id,
                         name: actor.name,
-                        profileImage: imageURLFormat(actor.profile_path),
+                        profileImage: imageURLFormat(actor.profile_path, "w185"),
                         character: actor.character,
                     }
                 }),
@@ -135,20 +135,8 @@ const TOKEN_DE_LEITURA = process.env.NEXT_PUBLIC_TOKEN_DE_LEITURA;
     }
 
     export async function getSimilarMovies(idMovie: string): Promise<Movie[]> {
-        const { json } = await get(`/movie/${idMovie}/similar`);
-        const selected = json.results.slice(0, 9);
-        return selected.map((item: any) => {
-            return {
-                id: item.id,
-                title: item.title,
-                overview: item.overview,
-                releaseDate: new Date(item.release_date),
-                vote: item.vote_average,
-                linkBgImage: imageURLFormat(item.backdrop_path),
-                linkPosterImage: imageURLFormat(item.poster_path)
-            }
-
-        })
+        const [{ json }, genreMap] = await Promise.all([get(`/movie/${idMovie}/similar`), getGenreMap()]);
+        return json.results.slice(0, 9).map((item: any) => mapMovie(item, genreMap));
     }
 
     export async function getActorDetails(idActor: string): Promise<ActorDetails> {
@@ -157,7 +145,7 @@ const TOKEN_DE_LEITURA = process.env.NEXT_PUBLIC_TOKEN_DE_LEITURA;
             id: json.id,
             name: json.name,
             bio: json.biography,
-            profileImage: imageURLFormat(json.profile_path),
+            profileImage: imageURLFormat(json.profile_path, "h632"),
             birthDate: new Date(json.birthday),
             birthPlace: json.place_of_birth,
             genre: 
@@ -167,21 +155,10 @@ const TOKEN_DE_LEITURA = process.env.NEXT_PUBLIC_TOKEN_DE_LEITURA;
 
     export async function getActorImages(idActor: string) {
         const { json } = await get(`/person/${idActor}/images`);
-        return json.profiles.map((img: any) => imageURLFormat(img.file_path))
+        return json.profiles.map((img: any) => imageURLFormat(img.file_path, "w780"))
     }
 
     export async function getAnotherMovies(idActor: string): Promise<Movie[]> {
-        const { json } = await get(`/person/${idActor}/movie_credits`);
-        const actorMovies = json.cast.slice(0, 9);
-        return actorMovies.map((item: any) => {
-            return {
-                id: item.id,
-                title: item.title,
-                overview: item.overview,
-                releaseDate: new Date(item.release_date),
-                vote: item.vote_average,
-                linkBgImage: imageURLFormat(item.backdrop_path),
-                linkPosterImage: imageURLFormat(item.poster_path)
-            }
-        })
+        const [{ json }, genreMap] = await Promise.all([get(`/person/${idActor}/movie_credits`), getGenreMap()]);
+        return json.cast.slice(0, 9).map((item: any) => mapMovie(item, genreMap));
     }

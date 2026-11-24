@@ -6,6 +6,7 @@ interface Movie {
     linkPosterImage: string;
     vote: number;
     releaseDate: Date;
+    genres?: Genre[];
 }
 
 interface MovieDetails extends Movie {

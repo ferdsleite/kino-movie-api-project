@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Flex from "./Flex";
 import Image from "next/image";
 import mergeClasses from "@/utils/mergeClasses";
@@ -13,14 +13,10 @@ interface ImageWithFallbackProps {
 }
 
 export default function ImageWithFallback({ url, imgAlt, className, children }:ImageWithFallbackProps) {
-    const [defaultImage, setDefaultImage] = useState(false);
+    // Use the image's own error event instead of downloading every image twice with fetch()
+    const [failed, setFailed] = useState(false);
 
-    useEffect(() => {
-        fetch(url)
-        .then(response => setDefaultImage(!response.ok))
-    }, []);
-
-    if(defaultImage || !url) {
+    if(failed || !url) {
         return <Flex col className="h-full w-full absolute -z-30">{children}</Flex>
     }
 
@@ -31,6 +27,7 @@ export default function ImageWithFallback({ url, imgAlt, className, children }:I
             src={url}
             className={mergeClasses("object-cover", className)}
             sizes="80vw"
+            onError={() => setFailed(true)}
         />
     )
 }

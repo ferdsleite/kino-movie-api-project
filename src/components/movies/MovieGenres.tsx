@@ -1,49 +1,15 @@
-'use client';
-
-import { useEffect, useState } from "react";
 import Flex from "../template/Flex";
 import mergeClasses from "@/utils/mergeClasses";
-import Skeleton from "../template/Skeleton";
 
 interface MovieGenresProps {
-    idMovie: string;
+    genres?: Genre[];
     big?: boolean;
-    genresDefault?: Genre[];
 }
 
-export default function MovieGenres({ idMovie, big, genresDefault }: MovieGenresProps) {
-    const [genres, setGenres] = useState<Genre[] | null>(null);
- 
-    useEffect(() => {
-        if(genresDefault && genresDefault.length > 0) {
-            setGenres(genresDefault)
-            return;
-        }
-
-        async function fetchGenres() {
-            try {
-                const res = await fetch(`/api/genres/${idMovie}`);
-                if(!res.ok) throw new Error("Failed to fecth genres");
-                const data = await res.json();
-                setGenres(data);
-            }  catch (error) {
-                console.error(error);
-            }
-        }
-        fetchGenres();
-    }, [idMovie]);
-
-    if(!genres) {
-        return (
-            <Flex className="flex-wrap justify-start">
-                {Array(4)
-                    .fill(0)
-                    .map((_, i) => {
-                        return <Skeleton key={i} className="rounded-lg h-8 w-16" />
-                })}
-            </Flex>            
-        )
-    }
+// Genres now arrive with the movie data from the server,
+// so this no longer calls /api/genres for every card.
+export default function MovieGenres({ genres, big }: MovieGenresProps) {
+    if (!genres || genres.length === 0) return null;
 
     return (
         <Flex className="flex-wrap justify-start">

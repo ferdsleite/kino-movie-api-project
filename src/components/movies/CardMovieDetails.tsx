@@ -25,7 +25,7 @@ export default function CardMovieDetails({ movie }: CardMovieDetailsProps) {
                         <p className="text-sm text-zinc-500">Duration: {movie.duration} min</p>
                         <p className="text-sm text-zinc-500">Original Title: {movie.originalTitle}</p>
                         <Flex col className="justify-start items-start w-full">
-                            <MovieGenres idMovie={movie.id} genresDefault={movie.genres} big />
+                            <MovieGenres genres={movie.genres} big />
                             <Vote vote={movie.vote} big />
                         </Flex>                        
                     </Flex>

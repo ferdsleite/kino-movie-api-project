@@ -30,7 +30,7 @@ export default function MovieCard({ movie, className }: MovieCardProps) {
             <Flex col className="h-60 z-50 justify-between py-8 px-4">
                 <Title text={movie.title} smallText align="left" />
                 <Flex col className="justify-start items-start w-full">
-                    <MovieGenres idMovie={movie.id} />
+                    <MovieGenres genres={movie.genres} />
                     <Vote vote={movie.vote} />
                 </Flex>
             </Flex>

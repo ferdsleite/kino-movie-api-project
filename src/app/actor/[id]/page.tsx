@@ -75,3 +75,12 @@ export default async function Actor({ params }: ActorProps) {
 //     );
 
 // }
+
+// Serve the cached page for a day before rendering it again on the server.
+export const revalidate = 86400;
+
+// No pages are built ahead of time, but each one is cached after its first visit
+// instead of being rendered on the server on every request.
+export async function generateStaticParams() {
+    return [];
+}

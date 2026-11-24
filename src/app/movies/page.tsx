@@ -19,3 +19,6 @@ export default  async function Movies() {
     )
 
 }
+
+// Serve the cached page for a day before rendering it again on the server.
+export const revalidate = 86400;
